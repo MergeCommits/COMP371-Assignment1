@@ -1,0 +1,48 @@
+#include <GL/glew.h>
+#include <stdexcept>
+
+#include "Triangle.h"
+
+Triangle::Triangle(Shader* shd) : Mesh(shd) {
+    primitiveCount = 1;
+    primitives.push_back(0);
+    primitives.push_back(1);
+    primitives.push_back(2);
+}
+
+void Triangle::generateData() {
+    vertexData.clear();
+    
+    vertexData.push_back(vertices[0]);
+    vertexData.push_back(vertices[1]);
+    vertexData.push_back(vertices[2]);
+    vertexData.push_back(colors[0]);
+    vertexData.push_back(colors[1]);
+    vertexData.push_back(colors[2]);
+    vertexData.push_back(colors[3]);
+    vertexData.push_back(vertices[3]);
+    vertexData.push_back(vertices[4]);
+    vertexData.push_back(vertices[5]);
+    vertexData.push_back(colors[4]);
+    vertexData.push_back(colors[5]);
+    vertexData.push_back(colors[6]);
+    vertexData.push_back(colors[7]);
+    vertexData.push_back(vertices[6]);
+    vertexData.push_back(vertices[7]);
+    vertexData.push_back(vertices[8]);
+    vertexData.push_back(colors[8]);
+    vertexData.push_back(colors[9]);
+    vertexData.push_back(colors[10]);
+    vertexData.push_back(colors[11]);
+}
+
+void Triangle::uploadData() {
+    GLuint err = GL_NO_ERROR;
+    
+    glBufferData(GL_ARRAY_BUFFER, vertexData.size() * sizeof(float), vertexData.data(), GL_STATIC_DRAW);
+    err = glGetError();
+    if (err != GL_NO_ERROR) {
+        throw std::runtime_error("Failed to buffer vertex data!");
+    }
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, primitives.size()*sizeof(GLuint), primitives.data(), GL_STATIC_DRAW);
+}
