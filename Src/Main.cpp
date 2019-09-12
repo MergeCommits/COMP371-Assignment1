@@ -19,6 +19,8 @@
 #include "Utils/String.h"
 #include "Graphics/Triangle.h"
 #include "Graphics/Shader.h"
+#include "Graphics/Camera.h"
+#include "Timing.h"
 
 int main() {
     // Initialize GLFW and OpenGL version
@@ -37,7 +39,9 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
     // Create Window and rendering context using GLFW, resolution is 800x600
-    GLFWwindow* window = glfwCreateWindow(800, 600, "Comp371 - Lab 01", NULL, NULL);
+    int width = 1024;
+    int height = 768;
+    GLFWwindow* window = glfwCreateWindow(width, height, "Comp371 - Lab 01", NULL, NULL);
     if (window == NULL) {
         std::cerr << "Failed to create GLFW window" << std::endl;
         glfwTerminate();
@@ -56,13 +60,18 @@ int main() {
 
 //    glClearColor(0.f, 0.f, 0.f, 1.f);
     glClearColor(0.38f, 0.08f, 0.137f, 1.f);
+    
+    // Fixed time steps.
+    Timing* timing = new Timing(60);
+    
+    // Camera.
+    Camera* cam = new Camera((float)width / height);
+    cam->setPosition(Vector3f(0.f, 0.f, -5.f));
 
     // Shaders.
     Shader* shd  = new Shader("default/");
     shd->addVec3VertexInput("position");
-    shd->addVec4VertexInput("color");
-    Shader::Uniform* testMat = shd->getMat4Uniform("da");
-    testMat->setValue(Matrix4x4f::identity);
+    cam->addShader(shd);
 
     // Define and upload geometry to the GPU here ...
     Triangle* tri = new Triangle(shd);
@@ -71,22 +80,32 @@ int main() {
     while(!glfwWindowShouldClose(window)) {
         // Detect inputs
         glfwPollEvents();
-
-        if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-            glfwSetWindowShouldClose(window, true);
-            break;
+        
+        while (timing->tickReady()) {
+            if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+                glfwSetWindowShouldClose(window, true);
+                break;
+            }
+            
+            timing->subtractTick();
         }
 
-        // Each frame, reset color of each pixel to glClearColor
+        // Draw code.
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+        cam->update();
 
         // Draw rainbow triangle.
         tri->render();
 
         // End frame
         glfwSwapBuffers(window);
+        
+        // Get elapsed seconds since last run.
+        double secondsPassed = timing->getElapsedSeconds();
+        timing->addSecondsToAccumulator(secondsPassed);
     }
 
+    delete cam;
     delete tri;
     delete shd;
 

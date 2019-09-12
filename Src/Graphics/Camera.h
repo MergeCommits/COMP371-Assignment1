@@ -34,7 +34,6 @@ class Camera {
     public:
         Camera(float aspectRatio, float fov);
         Camera(float aspectRatio);
-        ~Camera();
 
         void addShader(Shader* shd);
 

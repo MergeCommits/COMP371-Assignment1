@@ -34,6 +34,11 @@ void Camera::addShader(Shader* shd) {
 }
 
 void Camera::update() {
+    GLuint err = GL_NO_ERROR;
+    err = glGetError();
+    if (err != GL_NO_ERROR) {
+        throw std::runtime_error("Uncaught exception - Camera::update().");
+    }
     if (needsViewUpdate) {
         rotation = Matrix4x4f::constructWorldMat(Vector3f(0.f, 0.f, 0.f), Vector3f(1.f, 1.f, 1.f), Vector3f(-yAngle, xAngle, tilt));
 

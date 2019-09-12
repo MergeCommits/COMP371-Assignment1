@@ -34,6 +34,7 @@ Shader::Shader(const String& shaderFolder) {
         char infoLog[512];
         glGetShaderInfoLog(vertexShaderID, 512, NULL, infoLog);
         std::cerr << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+        throw std::runtime_error("Failed to compile vertex shader.");
     }
 
     // Fragment.
@@ -62,6 +63,7 @@ Shader::Shader(const String& shaderFolder) {
         char infoLog[512];
         glGetShaderInfoLog(vertexShaderID, 512, NULL, infoLog);
         std::cerr << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
+        throw std::runtime_error("Failed to compile fragment shader.");
     }
 
     glLinkProgram(shaderProgramID);

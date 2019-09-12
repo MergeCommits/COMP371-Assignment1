@@ -20,6 +20,7 @@ protected:
     bool needsUpload;
     virtual void generateData()=0;
     virtual void uploadData()=0;
+    virtual void renderInternal()=0;
 
 public:
     Mesh(Shader* shd);

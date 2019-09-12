@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "Mesh.h"
+#include "Shader.h"
 
 class Triangle : public Mesh {
 private:
@@ -15,17 +16,14 @@ private:
 
     std::vector<GLuint> primitives;
 
-    const float colors[12] = {
-        1.f, 0.f, 0.f, 1.f, // Red.
-        0.f, 0.f, 1.f, 1.f, // Blue.
-        0.f, 1.f, 0.f, 1.f  // Green.
-    };
-
     std::vector<float> vertexData;
+    
+    Shader::Uniform* worldMat;
 
 protected:
     virtual void generateData() override;
     virtual void uploadData() override;
+    virtual void renderInternal() override;
 
 public:
     Triangle(Shader* shd);

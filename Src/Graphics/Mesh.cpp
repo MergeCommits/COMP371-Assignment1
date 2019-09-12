@@ -20,6 +20,10 @@ Mesh::~Mesh() {
 
 void Mesh::render() {
     GLuint err = GL_NO_ERROR;
+    err = glGetError();
+    if (err != GL_NO_ERROR) {
+        throw std::runtime_error("Uncaught exception - Mesh::render().");
+    }
     
     glBindVertexArray(vertexArrayObject);
     glBindBuffer(GL_ARRAY_BUFFER, vertexBufferObject);
@@ -32,6 +36,7 @@ void Mesh::render() {
     if (needsGen) { generateData(); needsGen = false; }
     if (needsUpload) { uploadData(); needsUpload = false; }
     
+    renderInternal();
     shader->use();
 
     glDrawElements(GL_TRIANGLES, primitiveCount * 3, GL_UNSIGNED_INT, nullptr);
