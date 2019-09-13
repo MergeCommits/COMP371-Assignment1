@@ -39,9 +39,14 @@ void Triangle::uploadData() {
         throw std::runtime_error("Failed to buffer vertex data!");
     }
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, primitives.size()*sizeof(GLuint), primitives.data(), GL_STATIC_DRAW);
+    err = glGetError();
+    if (err != GL_NO_ERROR) {
+        throw std::runtime_error("Failed to buffer index data!");
+    }
 }
 
 void Triangle::renderInternal() {
     Matrix4x4f mat = Matrix4x4f::constructWorldMat(Vector3f::zero, Vector3f::one, Vector3f::zero);
     worldMat->setValue(mat);
+    shader->getVector4fUniform("fsColor")->setValue(Vector4f(1.f, 0.f, 0.f, 1.f));
 }

@@ -17,7 +17,7 @@
                         // initializing OpenGL and binding inputs
 
 #include "Utils/String.h"
-#include "Graphics/Triangle.h"
+#include "Graphics/Car.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Camera.h"
 #include "Timing.h"
@@ -57,9 +57,8 @@ int main() {
         glfwTerminate();
         return -1;
     }
-
-//    glClearColor(0.f, 0.f, 0.f, 1.f);
-    glClearColor(0.38f, 0.08f, 0.137f, 1.f);
+    
+    glClearColor(0.38f, 0.08f, 0.937f, 1.f);
     
     // Fixed time steps.
     Timing* timing = new Timing(60);
@@ -73,12 +72,10 @@ int main() {
     shd->addVec3VertexInput("position");
     cam->addShader(shd);
 
-    // Define and upload geometry to the GPU here ...
-    Triangle* tri = new Triangle(shd);
+    Car* car = new Car(shd);
 
-    // Entering Main Loop
-    while(!glfwWindowShouldClose(window)) {
-        // Detect inputs
+    while (!glfwWindowShouldClose(window)) {
+        // Detect inputs.
         glfwPollEvents();
         
         while (timing->tickReady()) {
@@ -94,10 +91,8 @@ int main() {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         cam->update();
 
-        // Draw rainbow triangle.
-        tri->render();
+        car->render();
 
-        // End frame
         glfwSwapBuffers(window);
         
         // Get elapsed seconds since last run.
@@ -106,7 +101,7 @@ int main() {
     }
 
     delete cam;
-    delete tri;
+    delete car;
     delete shd;
 
     // Shutdown GLFW

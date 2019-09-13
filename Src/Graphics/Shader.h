@@ -14,11 +14,13 @@ public:
         union Values {
             Values();
             Matrix4x4f matrixVal;
+            Vector4f vec4Val;
         };
         Values value;
         
         enum class Kind {
-            Matrix
+            Matrix,
+            Vector4f
         };
         String name;
         Kind type;
@@ -27,6 +29,7 @@ public:
         Uniform(Kind kind, GLuint location);
         
         void setValue(Matrix4x4f value);
+        void setValue(Vector4f value);
     };
     
 private:
@@ -53,6 +56,7 @@ public:
     void addVec3VertexInput(const String& name);
     void addVec4VertexInput(const String& name);
     Uniform* getMat4Uniform(const String& name);
+    Uniform* getVector4fUniform(const String& name);
     void use() const;
     void unbindVertexInputs();
 };

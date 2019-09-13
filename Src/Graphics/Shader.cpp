@@ -80,6 +80,10 @@ Shader::~Shader() {
     glDeleteProgram(shaderProgramID);
     glDeleteShader(vertexShaderID);
     glDeleteShader(fragmentShaderID);
+    
+    for (int i = 0; i < (int)uniformVars.size(); i++) {
+        delete uniformVars[i];
+    }
 }
 
 void Shader::addVec3VertexInput(const String& name) {
@@ -111,9 +115,26 @@ Shader::Uniform* Shader::getMat4Uniform(const String& name) {
             return uniformVars[i];
         }
     }
-
+    
     // This isn't here, make it.
     Uniform* uf = new Uniform(Uniform::Kind::Matrix, glGetUniformLocation(shaderProgramID, name.cstr()));
+    uf->name = name;
+    uniformVars.push_back(uf);
+    return uf;
+}
+
+Shader::Uniform* Shader::getVector4fUniform(const String& name) {
+    for (int i = 0; i < (int)uniformVars.size(); i++) {
+        if (uniformVars[i]->name.equals(name)) {
+            if (uniformVars[i]->type != Uniform::Kind::Vector4f) {
+                throw std::runtime_error("Attempted to assign vec4 value to non-vec4 type!");
+            }
+            return uniformVars[i];
+        }
+    }
+    
+    // This isn't here, make it.
+    Uniform* uf = new Uniform(Uniform::Kind::Vector4f, glGetUniformLocation(shaderProgramID, name.cstr()));
     uf->name = name;
     uniformVars.push_back(uf);
     return uf;
@@ -147,6 +168,14 @@ void Shader::use() const {
             case Uniform::Kind::Matrix: {
                 glUniformMatrix4fv(uf->location, 1, GL_FALSE, (const float*)uf->value.matrixVal.elements);
             } break;
+            case Uniform::Kind::Vector4f: {
+                glUniform4f(uf->location, uf->value.vec4Val.x, uf->value.vec4Val.y, uf->value.vec4Val.z, uf->value.vec4Val.w);
+            } break;
+        }
+        
+        err = glGetError();
+        if (err != GL_NO_ERROR) {
+            throw std::runtime_error("Failed to assign shader uniform!");
         }
     }
 }
@@ -169,4 +198,11 @@ void Shader::Uniform::setValue(Matrix4x4f value) {
         throw std::runtime_error("Attempted to assign mat4 value to non-mat4 type!");
     }
     this->value.matrixVal = value;
+}
+
+void Shader::Uniform::setValue(Vector4f value) {
+    if (type != Kind::Vector4f) {
+        throw std::runtime_error("Attempted to assign vec4 value to non-vec4 type!");
+    }
+    this->value.vec4Val = value;
 }

@@ -7,13 +7,12 @@ class Shader;
 
 class Mesh {
 private:
-    Shader* shader;
-
     GLuint vertexArrayObject = 0;
     GLuint vertexBufferObject = 0;
     GLuint primitiveBuffer = 0;
 
 protected:
+    Shader* shader;
     GLsizei primitiveCount = 0;
 
     bool needsGen;
