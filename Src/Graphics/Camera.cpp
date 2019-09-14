@@ -61,7 +61,7 @@ void Camera::update() {
     }
 }
 
-void Camera::setPosition(const Vector3f pos) {
+void Camera::setPosition(const Vector3f& pos) {
     needsViewUpdate = true;
     position = pos;
 }

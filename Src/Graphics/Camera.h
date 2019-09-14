@@ -39,7 +39,7 @@ class Camera {
 
         void update();
 
-        void setPosition(const Vector3f pos);
+        void setPosition(const Vector3f& pos);
         void setTilt(float rad);
         void addAngle(float xAngle, float yAngle);
 };

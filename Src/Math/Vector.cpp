@@ -107,6 +107,7 @@ Vector3f Vector3f::multiply(float s) const {
 }
 
 Vector3f Vector3f::normalize() const {
+    if (length() == 0) { return Vector3f::zero; }
     return multiply(1.f/length());
 }
 

@@ -16,19 +16,24 @@ Cube::Cube(Shader* shd) : Mesh(shd) {
     };
 
     worldMat = shd->getMat4Uniform("modelMatrix");
+    color = Vector4f(1.f, 0.f, 0.f, 1.f);
 }
 
 void Cube::setPosition(float x, float y, float z) {
     position = Vector3f(x, y, z);
 }
 
-void Cube::addPositionXY(const Vector2f& vect) {
+void Cube::addPositionXZ(const Vector2f& vect) {
     position.x += vect.x;
-    position.y += vect.y;
+    position.z += vect.y;
 }
 
 void Cube::setScale(float x, float y, float z) {
     scale = Vector3f(x, y, z);
+}
+
+void Cube::addScale(float sca) {
+    scale.add(Vector3f(sca, sca, sca));
 }
 
 void Cube::addRotationX(float bruh) {
@@ -65,5 +70,5 @@ void Cube::uploadData() {
 void Cube::renderInternal() {
     Matrix4x4f mat = Matrix4x4f::constructWorldMat(position, scale, rotation);
     worldMat->setValue(mat);
-    shader->getVector4fUniform("fsColor")->setValue(Vector4f(1.f, 0.f, 0.f, 1.f));
+    shader->getVector4fUniform("fsColor")->setValue(color);
 }

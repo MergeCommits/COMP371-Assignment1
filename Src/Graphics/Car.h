@@ -19,8 +19,10 @@ private:
 public:
     Car(Shader* shd);
     
-    void addPositionXY(const Vector2f& vect);
+    void walk(bool forward, float speed);
+    void addPositionXZ(const Vector2f& vect);
     void setScale(float x, float y, float z);
+    void addScale(float sca);
     void addRotationX(float bruh);
     void addRotationY(float bruh);
     void addRotationZ(float bruh);

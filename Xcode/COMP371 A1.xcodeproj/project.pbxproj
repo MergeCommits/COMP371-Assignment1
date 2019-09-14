@@ -14,6 +14,7 @@
 		038B791E1A6FF3EB00111E36 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 038B791D1A6FF3EB00111E36 /* IOKit.framework */; };
 		03CF97D11B56DF9A00F60482 /* libfreeimage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CF97D01B56DF9A00F60482 /* libfreeimage.a */; };
 		03DA72D222B02FC5009C7A21 /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03DA72D122B02FC5009C7A21 /* libGLEW.a */; };
+		190B8FBE232C086D00F96298 /* Grid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 190B8FBD232C086D00F96298 /* Grid.cpp */; };
 		19240964232B292B0062AC03 /* Cube.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19240963232B292B0062AC03 /* Cube.cpp */; };
 		19240967232B30540062AC03 /* Car.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19240966232B30540062AC03 /* Car.cpp */; };
 		193AD0E6232A8276007879F4 /* String.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 193AD0D9232A8276007879F4 /* String.cpp */; };
@@ -52,6 +53,8 @@
 		038B791D1A6FF3EB00111E36 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		03CF97D01B56DF9A00F60482 /* libfreeimage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libfreeimage.a; path = "../ThirdParty/FreeImage-3170/lib/osx/libfreeimage.a"; sourceTree = "<group>"; };
 		03DA72D122B02FC5009C7A21 /* libGLEW.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGLEW.a; path = "../ThirdParty/glew-2.1.0/lib/osx/libGLEW.a"; sourceTree = "<group>"; };
+		190B8FBC232C086D00F96298 /* Grid.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Grid.h; sourceTree = "<group>"; };
+		190B8FBD232C086D00F96298 /* Grid.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Grid.cpp; sourceTree = "<group>"; };
 		19240962232B292B0062AC03 /* Cube.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Cube.h; sourceTree = "<group>"; };
 		19240963232B292B0062AC03 /* Cube.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Cube.cpp; sourceTree = "<group>"; };
 		19240965232B30540062AC03 /* Car.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Car.h; sourceTree = "<group>"; };
@@ -183,6 +186,8 @@
 				19240965232B30540062AC03 /* Car.h */,
 				19240963232B292B0062AC03 /* Cube.cpp */,
 				19240962232B292B0062AC03 /* Cube.h */,
+				190B8FBD232C086D00F96298 /* Grid.cpp */,
+				190B8FBC232C086D00F96298 /* Grid.h */,
 				193AD10A232A9227007879F4 /* Mesh.cpp */,
 				193AD109232A9227007879F4 /* Mesh.h */,
 				193AD0F5232A83DF007879F4 /* Shader.cpp */,
@@ -258,6 +263,7 @@
 				193AD0E6232A8276007879F4 /* String.cpp in Sources */,
 				19240967232B30540062AC03 /* Car.cpp in Sources */,
 				193AD0F6232A83DF007879F4 /* Shader.cpp in Sources */,
+				190B8FBE232C086D00F96298 /* Grid.cpp in Sources */,
 				193AD0EA232A8276007879F4 /* Matrix.cpp in Sources */,
 				193AD10B232A9227007879F4 /* Mesh.cpp in Sources */,
 				193AD10E232A94BC007879F4 /* Triangle.cpp in Sources */,
