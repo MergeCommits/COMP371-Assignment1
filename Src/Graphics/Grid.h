@@ -9,10 +9,10 @@
 class Grid : public Mesh {
 private:
     const float vertices[12] = {
-        -50.f, 0.f, -50.f,
-        -50.f, 0.f, 50.f,
-        50.f, 0.f, -50.f,
-        50.f, 0.f, 50.f
+        -1.f, 0.f, -1.f,
+        -1.f, 0.f, 1.f,
+        1.f, 0.f, -1.f,
+        1.f, 0.f, 1.f
     };
 
     std::vector<GLuint> primitives;
@@ -28,6 +28,7 @@ protected:
 
 public:
     Vector4f color;
+    Vector3f scale;
 
     Grid(Shader* shd);
 };

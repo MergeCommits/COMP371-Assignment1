@@ -33,7 +33,7 @@ void Cube::setScale(float x, float y, float z) {
 }
 
 void Cube::addScale(float sca) {
-    scale.add(Vector3f(sca, sca, sca));
+    scale = scale.add(Vector3f(sca, sca, sca));
 }
 
 void Cube::addRotationX(float bruh) {

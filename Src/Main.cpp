@@ -78,6 +78,7 @@ int main() {
     // Models.
     Car* car = new Car(shd);
     Grid* grid = new Grid(shd);
+    grid->scale = Vector3f(50.f, 1.f, 50.f); // 100x100 grid.
 
     while (!glfwWindowShouldClose(window)) {
         // Detect inputs.
@@ -121,17 +122,18 @@ int main() {
 
 void updateInputs(float timestep, GLFWwindow* window, Car* car) {
     // Movement.
+    float speed = 5.f;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        car->walk(true, timestep * 5.f);
+        car->walk(true, timestep * speed);
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        car->walk(true, timestep * -5.f);
+        car->walk(false, timestep * speed);
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        car->addRotationY(timestep * 5.f);
+        car->addRotationY(timestep * speed);
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        car->addRotationY(timestep * -5.f);
+        car->addRotationY(timestep * -speed);
     }
     
     // Scale.

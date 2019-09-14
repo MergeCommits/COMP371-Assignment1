@@ -6,8 +6,7 @@
 
 Car::Car(Shader* shd) {
     Cube* body = new Cube(shd);
-    body->setScale(4.f, 2.f, 1.f);
-//    body->setPosition(0.f, 2.f, 0.f);
+    body->setScale(4.f, 2.f, 6.f);
 
     cubes.push_back(body);
 }
@@ -28,7 +27,7 @@ void Car::setScale(float x, float y, float z) {
 }
 
 void Car::addScale(float sca) {
-    scale.add(Vector3f(sca, sca, sca));
+    scale = scale.add(Vector3f(sca, sca, sca));
     for (int i = 0; i < (int)cubes.size(); i++) {
         cubes[i]->addScale(sca);
     }

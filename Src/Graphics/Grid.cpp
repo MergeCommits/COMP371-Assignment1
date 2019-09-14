@@ -7,12 +7,13 @@ Grid::Grid(Shader* shd) : Mesh(shd) {
     }
     primitiveCount = 2;
     primitives = {
-        0, 1, 3,
+        0, 2, 3,
         3, 1, 0
     };
 
     worldMat = shd->getMat4Uniform("modelMatrix");
     color = Vector4f(1.f, 1.f, 1.f, 1.f);
+    scale = Vector3f::one;
 }
 
 void Grid::generateData() {
@@ -35,7 +36,7 @@ void Grid::uploadData() {
 }
 
 void Grid::renderInternal() {
-    Matrix4x4f mat = Matrix4x4f::constructWorldMat(Vector3f::zero, Vector3f::one, Vector3f::zero);
+    Matrix4x4f mat = Matrix4x4f::constructWorldMat(Vector3f::zero, scale, Vector3f::zero);
     worldMat->setValue(mat);
     shader->getVector4fUniform("fsColor")->setValue(color);
 }
