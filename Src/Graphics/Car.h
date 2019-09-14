@@ -15,6 +15,7 @@ private:
     Vector3f rotation;
     
     std::vector<Cube*> cubes;
+    Cube* wheels[4];
     
 public:
     Car(Shader* shd);

@@ -7,8 +7,21 @@
 Car::Car(Shader* shd) {
     Cube* body = new Cube(shd);
     body->setScale(4.f, 2.f, 6.f);
+    body->setPosition(0.f, 0.5f, 0.f);
+    
+    wheels[0] = new Cube(shd);
+    wheels[0]->setPosition(4.5f, 0.f, 6.5f);
+    wheels[1] = new Cube(shd);
+    wheels[1]->setPosition(4.5f, 0.f, -6.5f);
+    wheels[2] = new Cube(shd);
+    wheels[2]->setPosition(-4.5f, 0.f, 6.5f);
+    wheels[3] = new Cube(shd);
+    wheels[3]->setPosition(-4.5f, 0.f, -6.5f);
 
     cubes.push_back(body);
+    for (int i = 0; i < 4; i++) {
+        cubes.push_back(wheels[i]);
+    }
 }
 
 void Car::addPositionXZ(const Vector2f& vect) {

@@ -85,11 +85,6 @@ int main() {
         glfwPollEvents();
         
         while (timing->tickReady()) {
-            if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-                glfwSetWindowShouldClose(window, true);
-                break;
-            }
-            
             updateInputs((float)timing->getTimeStep(), window, car);
             
             timing->subtractTick();
@@ -121,8 +116,20 @@ int main() {
 }
 
 void updateInputs(float timestep, GLFWwindow* window, Car* car) {
+    if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+        glfwSetWindowShouldClose(window, true);
+        return;
+    }
+    
     // Movement.
     float speed = 5.f;
+    if (glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) {
+        speed += 15.f;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS) {
+        speed = 2.f;
+    }
+    
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         car->walk(true, timestep * speed);
     }

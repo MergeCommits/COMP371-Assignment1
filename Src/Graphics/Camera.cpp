@@ -24,7 +24,7 @@ Camera::Camera(float aspectRatio, float fov) {
     needsProjUpdate = true;
 }
 
-Camera::Camera(float aspectRatio) : Camera(aspectRatio, MathUtil::degToRad(90.0f)) { }
+Camera::Camera(float aspectRatio) : Camera(aspectRatio, MathUtil::degToRad(70.f)) { }
 
 void Camera::addShader(Shader* shd) {
     shaders.push_back(shd);

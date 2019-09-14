@@ -158,11 +158,11 @@
 		193AD0DD232A8276007879F4 /* Math */ = {
 			isa = PBXGroup;
 			children = (
-				193AD0DE232A8276007879F4 /* Matrix.h */,
 				193AD0DF232A8276007879F4 /* MathUtil.cpp */,
-				193AD0E0232A8276007879F4 /* Vector.cpp */,
-				193AD0E1232A8276007879F4 /* Matrix.cpp */,
 				193AD0E2232A8276007879F4 /* MathUtil.h */,
+				193AD0E1232A8276007879F4 /* Matrix.cpp */,
+				193AD0DE232A8276007879F4 /* Matrix.h */,
+				193AD0E0232A8276007879F4 /* Vector.cpp */,
 				193AD0E3232A8276007879F4 /* Vector.h */,
 			);
 			path = Math;
