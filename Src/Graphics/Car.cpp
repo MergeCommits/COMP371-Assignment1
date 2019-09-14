@@ -82,6 +82,6 @@ void Car::walk(bool forward, float speed) {
 
 void Car::render() {
     for (int i = 0; i < (int)cubes.size(); i++) {
-        cubes[i]->render();
+        cubes[i]->render(position);
     }
 }

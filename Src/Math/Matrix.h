@@ -22,7 +22,6 @@ public:
     static Matrix4x4f translate(const Vector3f& position);
     static Matrix4x4f scale(const Vector3f& scale);
     static Matrix4x4f rotate(const Vector3f& rotation);
-//    static Matrix4x4f rotate(const Vector3f& rotation, const Vector3f axis);
     static Matrix4x4f constructWorldMat(const Vector3f& position,const Vector3f& scale,const Vector3f& rotation);
     static Matrix4x4f constructViewMat(const Vector3f& position,const Vector3f& target,const Vector3f& upVector);
     static Matrix4x4f constructPerspectiveMat(float horizontalfov, float aspectRatio, float nearZ, float farZ);

@@ -43,6 +43,8 @@ public:
     void addRotationX(float bruh);
     void addRotationY(float bruh);
     void addRotationZ(float bruh);
+    
+    void render(const Vector3f& origin);
 };
 
 #endif // CUBE_H_INCLUDED

@@ -99,35 +99,6 @@ Matrix4x4f Matrix4x4f::rotate(const Vector3f& rotation) {
     return yawMat.product(pitchMat.product(rollMat));
 }
 
-//Matrix4x4f rotate(const Vector3f& rotation, const Vector3f axis) {
-//    T const a = angle;
-//    T const c = cos(a);
-//    T const s = sin(a);
-//    
-//    vec<3, T, Q> axis(normalize(v));
-//    vec<3, T, Q> temp((T(1) - c) * axis);
-//    
-//    mat<4, 4, T, Q> Rotate;
-//    Rotate[0][0] = c + temp[0] * axis[0];
-//    Rotate[0][1] = temp[0] * axis[1] + s * axis[2];
-//    Rotate[0][2] = temp[0] * axis[2] - s * axis[1];
-//    
-//    Rotate[1][0] = temp[1] * axis[0] - s * axis[2];
-//    Rotate[1][1] = c + temp[1] * axis[1];
-//    Rotate[1][2] = temp[1] * axis[2] + s * axis[0];
-//    
-//    Rotate[2][0] = temp[2] * axis[0] + s * axis[1];
-//    Rotate[2][1] = temp[2] * axis[1] - s * axis[0];
-//    Rotate[2][2] = c + temp[2] * axis[2];
-//    
-//    Matrix4x4f Result;
-//    result[0] = m[0] * Rotate[0][0] + m[1] * Rotate[0][1] + m[2] * Rotate[0][2];
-//    result[1] = m[0] * Rotate[1][0] + m[1] * Rotate[1][1] + m[2] * Rotate[1][2];
-//    result[2] = m[0] * Rotate[2][0] + m[1] * Rotate[2][1] + m[2] * Rotate[2][2];
-//    result[3] = m[3];
-//    return Result;
-//}
-
 Matrix4x4f Matrix4x4f::constructWorldMat(const Vector3f& position,const Vector3f& scale,const Vector3f& rotation) {
     Matrix4x4f translationMat = translate(position);
     Matrix4x4f scaleMat = Matrix4x4f::scale(scale);
