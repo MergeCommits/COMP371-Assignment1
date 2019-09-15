@@ -27,10 +27,8 @@
 int width = 1024;
 int height = 768;
 
-void updateInputs(float timestep, GLFWwindow* window, Car* car);
-static void cursorPositionCallback(GLFWwindow* window, double x, double y);
-float mouseXDiff = 0.f;
-float mouseYDiff = 0.f;
+void mouseCallback(GLFWwindow* window, double xpos, double ypos);
+void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam);
 
 int main() {
     // Give std::rand the current time as a seed.
@@ -59,9 +57,9 @@ int main() {
         return -1;
     }
     glfwMakeContextCurrent(window);
-    glfwSetCursorPosCallback(window, cursorPositionCallback);
     glfwSetCursorPos(window, width / 2.f, height / 2.f);
     glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+    glfwSetCursorPosCallback(window, mouseCallback);
 
     // Initialize GLEW.
     glewExperimental = true; // Needed for core profile
@@ -107,7 +105,7 @@ int main() {
             // Detect inputs.
             glfwPollEvents();
             
-            updateInputs((float)timing->getTimeStep(), window, car);
+            updateInputs((float)timing->getTimeStep(), window, car, cam);
             
             timing->subtractTick();
         }
@@ -145,17 +143,42 @@ int main() {
 	return 0;
 }
 
-void cursorPositionCallback(GLFWwindow* window, double x, double y) {
-    float centerX = width / 2.f;
-    float centerY = height / 2.f;
-    mouseXDiff = (x - centerX) / 300.f;
-    mouseYDiff = (y - centerY) / 300.f;
-    glfwSetCursorPos(window, centerX, centerY);
-}
-
 bool spaceHit = false; // Used to determine whether the spacebar was HIT, as opposed to just pressed.
 
-void updateInputs(float timestep, GLFWwindow* window, Car* car) {
+// Mouse position last frame.
+float prevMouseX = 0.f;
+float prevMouseY = 0.f;
+// Difference between the mouse position in this frame and the previous frame.
+float mouseXDiff = 0.f;
+float mouseYDiff = 0.f;
+
+void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS) {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    } else {
+        glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+        mouseXDiff = xpos - prevMouseX;
+        mouseYDiff = ypos - prevMouseY;
+        prevMouseX = xpos;
+        prevMouseY = ypos;
+        
+        float sensitivity = 0.05f;
+        mouseXDiff *= sensitivity;
+        mouseYDiff *= sensitivity;
+        
+        // Lock mouse position inside the window.
+        // Ideally we'd just lock the mouse at the center of the window at all times but GLFW kinda sucks for that.
+        if (prevMouseX < (width * 0.10f) || prevMouseX > (width * 0.90f)
+            || prevMouseY < (height * 0.10f) || prevMouseY > (height * 0.90f)) {
+            prevMouseX = width / 2.f;
+            prevMouseY = height / 2.f;
+            glfwSetCursorPos(window, prevMouseX, prevMouseY);
+        }
+    }
+}
+
+void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam) {
+    // Cursor position.
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
         return;
@@ -211,5 +234,10 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car) {
     }
     if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
         car->setRenderingMode(GL_FILL);
+    }
+    
+    // Use mouse movement to manipulate the camera.
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+        cam->addFov(-mouseYDiff);
     }
 }

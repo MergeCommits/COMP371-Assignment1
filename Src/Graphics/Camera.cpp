@@ -16,6 +16,7 @@ Camera::Camera(float aspectRatio, float fov) {
     float nearZ = 0.01f;
     float farZ = 25.f;
     this->fov = fov;
+    this->aspectRatio = aspectRatio;
     projectionMatrix = Matrix4x4f::constructPerspectiveMat(fov, aspectRatio, nearZ, farZ);
 
     rotation = Matrix4x4f::identity;
@@ -53,6 +54,10 @@ void Camera::update() {
     }
 
     if (needsProjUpdate) {
+        float nearZ = 0.01f;
+        float farZ = 25.f;
+        projectionMatrix = Matrix4x4f::constructPerspectiveMat(fov, aspectRatio, nearZ, farZ);
+        
         for (int i = 0; i < (int)shaders.size(); i++) {
             shaders[i]->getMat4Uniform("projectionMatrix")->setValue(projectionMatrix);
         }
@@ -94,4 +99,9 @@ void Camera::addAngle(float x, float y) {
     }
 
     needsViewUpdate = true;
+}
+
+void Camera::addFov(float deg) {
+    fov += MathUtil::degToRad(deg);
+    needsProjUpdate = true;
 }

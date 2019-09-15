@@ -16,6 +16,7 @@ class Camera {
         float yAngleLimit;
         float tilt;
 
+        float aspectRatio;
         float fov;
 
         bool needsViewUpdate;
@@ -42,6 +43,7 @@ class Camera {
         void setPosition(const Vector3f& pos);
         void setTilt(float rad);
         void addAngle(float xAngle, float yAngle);
+        void addFov(float deg);
 };
 
 #endif // CAMERA_H_INCLUDED
