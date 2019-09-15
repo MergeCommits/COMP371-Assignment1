@@ -22,7 +22,15 @@ private:
 public:
     Car(Shader* shd);
     
-    void walk(bool forward, float speed);
+    enum class WalkInput {
+        None = 0x0,
+        Forward = 0x1,
+        Backward = 0x2,
+        Left = 0x4,
+        Right = 0x8
+    };
+    
+    void walk(WalkInput input, float speed);
     void addPositionXZ(const Vector2f& vect);
     void setScale(float x, float y, float z);
     void addScale(float sca);
@@ -33,5 +41,8 @@ public:
     
     void render();
 };
+
+const Car::WalkInput operator&(const Car::WalkInput& a, const Car::WalkInput& b);
+const Car::WalkInput operator|(const Car::WalkInput& a, const Car::WalkInput& b);
 
 #endif // CAR_H_INCLUDED

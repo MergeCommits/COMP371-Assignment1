@@ -73,16 +73,27 @@ void Car::setRenderingMode(GLenum mode) {
     renderingMode = mode;
 }
 
-void Car::walk(bool forward, float speed) {
+void Car::walk(Car::WalkInput input, float speed) {
+    if (input == WalkInput::None) { return; }
+    
     float sinAngle = std::sin(-rotation.y); // Invert this to use the correct coordinate system.
     float cosAngle = std::cos(rotation.y);
     
     Vector2f targetDir = Vector2f::zero;
-    if (forward) {
-        targetDir = targetDir.add(Vector2f(sinAngle, cosAngle));
-    } else {
-        targetDir = targetDir.add(Vector2f(-sinAngle, -cosAngle));
+    if ((input & WalkInput::Forward) != WalkInput::None) {
+        targetDir = targetDir.add(Vector2f(sinAngle,cosAngle));
     }
+    if ((input & WalkInput::Backward) != WalkInput::None) {
+        targetDir = targetDir.add(Vector2f(-sinAngle,-cosAngle));
+    }
+    if ((input & WalkInput::Left) != WalkInput::None) {
+        targetDir = targetDir.add(Vector2f(-cosAngle,sinAngle));
+    }
+    if ((input & WalkInput::Right) != WalkInput::None) {
+        targetDir = targetDir.add(Vector2f(cosAngle,-sinAngle));
+    }
+    
+    if (targetDir.lengthSquared() < 0.01f) { return; }
     addPositionXZ(targetDir.normalize().multiply(speed));
 }
 
@@ -92,4 +103,12 @@ void Car::render() {
         cubes[i]->render(position);
     }
     glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+}
+
+const Car::WalkInput operator&(const Car::WalkInput& a, const Car::WalkInput& b) {
+    return (Car::WalkInput)((int)a & (int)b);
+}
+
+const Car::WalkInput operator|(const Car::WalkInput& a, const Car::WalkInput& b) {
+    return (Car::WalkInput)((int)a | (int)b);
 }

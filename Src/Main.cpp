@@ -177,18 +177,22 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car) {
         speed = 2.f;
     }
     
+    Car::WalkInput input = Car::WalkInput::None;
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        car->walk(true, timestep * speed);
+        input = input | Car::WalkInput::Forward;
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        car->walk(false, timestep * speed);
+        input = input | Car::WalkInput::Backward;
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        car->addRotationY(timestep * speed);
+//        car->addRotationY(timestep * speed);
+        input = input | Car::WalkInput::Left;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        car->addRotationY(timestep * -speed);
+//        car->addRotationY(timestep * -speed);
+        input = input | Car::WalkInput::Right;
     }
+    car->walk(input, timestep * speed);
     
     // Scale.
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
