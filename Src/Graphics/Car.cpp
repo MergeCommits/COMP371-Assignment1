@@ -5,6 +5,8 @@
 #include "Shader.h"
 
 Car::Car(Shader* shd) {
+    renderingMode = GL_FILL;
+    
     Cube* body = new Cube(shd);
     body->setScale(4.f, 2.f, 6.f);
     body->setPosition(0.f, 0.5f, 0.f);
@@ -67,6 +69,10 @@ void Car::addRotationZ(float bruh) {
     }
 }
 
+void Car::setRenderingMode(GLenum mode) {
+    renderingMode = mode;
+}
+
 void Car::walk(bool forward, float speed) {
     float sinAngle = std::sin(-rotation.y); // Invert this to use the correct coordinate system.
     float cosAngle = std::cos(rotation.y);
@@ -81,7 +87,9 @@ void Car::walk(bool forward, float speed) {
 }
 
 void Car::render() {
+    glPolygonMode(GL_FRONT_AND_BACK, renderingMode);
     for (int i = 0; i < (int)cubes.size(); i++) {
         cubes[i]->render(position);
     }
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 }

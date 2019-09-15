@@ -88,6 +88,7 @@ int main() {
 
     // Models.
     Car* car = new Car(shd);
+    car->addRotationY(MathUtil::PI / -2.f);
     Grid* grid = new Grid(shd);
     grid->scale = Vector3f(50.f, 1.f, 50.f); // 100x100 grid.
     
@@ -195,5 +196,16 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car) {
     }
     if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
         car->addScale(timestep * -2.f);
+    }
+    
+    // Change how the car is rendered.
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS) {
+        car->setRenderingMode(GL_POINT);
+    }
+    if (glfwGetKey(window, GLFW_KEY_L) == GLFW_PRESS) {
+        car->setRenderingMode(GL_LINE);
+    }
+    if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) {
+        car->setRenderingMode(GL_FILL);
     }
 }

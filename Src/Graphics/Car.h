@@ -2,6 +2,7 @@
 #define CAR_H_INCLUDED
 
 #include <vector>
+#include <GL/glew.h>
 
 #include "../Math/Vector.h"
 
@@ -13,6 +14,7 @@ private:
     Vector3f position;
     Vector3f scale;
     Vector3f rotation;
+    GLenum renderingMode;
     
     std::vector<Cube*> cubes;
     Cube* wheels[4];
@@ -27,6 +29,7 @@ public:
     void addRotationX(float bruh);
     void addRotationY(float bruh);
     void addRotationZ(float bruh);
+    void setRenderingMode(GLenum mode);
     
     void render();
 };
