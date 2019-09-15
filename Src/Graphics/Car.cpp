@@ -8,8 +8,20 @@ Car::Car(Shader* shd) {
     renderingMode = GL_FILL;
     
     Cube* body = new Cube(shd);
-    body->setScale(4.f, 2.f, 6.f);
+    body->setScale(4.f, 0.5f, 6.f);
     body->setPosition(0.f, 0.5f, 0.f);
+    Cube* leftWall = new Cube(shd);
+    leftWall->setScale(0.5f, 1.25f, 6.f);
+    leftWall->setPosition(-1.75f, 1.f, 0.f);
+    Cube* rightWall = new Cube(shd);
+    rightWall->setScale(0.5f, 1.25f, 6.f);
+    rightWall->setPosition(1.75f, 1.f, 0.f);
+    Cube* frontWall = new Cube(shd);
+    frontWall->setScale(3.f, 1.25f, 0.5f);
+    frontWall->setPosition(0.f, 1.f, 2.75f);
+    Cube* backWall = new Cube(shd);
+    backWall->setScale(3.f, 1.25f, 0.5f);
+    backWall->setPosition(0.f, 1.f, -2.75f);
     
     wheels[0] = new Cube(shd);
     wheels[0]->setPosition(4.5f, 0.f, 6.5f);
@@ -19,8 +31,16 @@ Car::Car(Shader* shd) {
     wheels[2]->setPosition(-4.5f, 0.f, 6.5f);
     wheels[3] = new Cube(shd);
     wheels[3]->setPosition(-4.5f, 0.f, -6.5f);
+    
+    for (int i = 0; i < 4; i++) {
+        wheels[i]->color = Vector4f(0.f, 0.f, 0.f, 1.f);
+    }
 
     cubes.push_back(body);
+    cubes.push_back(leftWall);
+    cubes.push_back(rightWall);
+    cubes.push_back(frontWall);
+    cubes.push_back(backWall);
     for (int i = 0; i < 4; i++) {
         cubes.push_back(wheels[i]);
     }
@@ -58,7 +78,7 @@ void Car::addRotationX(float bruh) {
 void Car::addRotationY(float bruh) {
     rotation.y += bruh;
     for (int i = 0; i < (int)cubes.size(); i++) {
-        cubes[i]->addRotationY(bruh);
+        cubes[i]->addRotationOriginY(bruh);
     }
 }
 
@@ -82,9 +102,17 @@ void Car::walk(Car::WalkInput input, float speed) {
     Vector2f targetDir = Vector2f::zero;
     if ((input & WalkInput::Forward) != WalkInput::None) {
         targetDir = targetDir.add(Vector2f(sinAngle,cosAngle));
+        // Rotate wheels.
+        for (int i = 0; i < 4; i++) {
+            wheels[i]->addRotationX(-speed);
+        }
     }
     if ((input & WalkInput::Backward) != WalkInput::None) {
         targetDir = targetDir.add(Vector2f(-sinAngle,-cosAngle));
+        // Rotate wheels.
+        for (int i = 0; i < 4; i++) {
+            wheels[i]->addRotationX(speed);
+        }
     }
     if ((input & WalkInput::Left) != WalkInput::None) {
         targetDir = targetDir.add(Vector2f(-cosAngle,sinAngle));

@@ -99,6 +99,10 @@ Matrix4x4f Matrix4x4f::rotate(const Vector3f& rotation) {
     return yawMat.product(pitchMat.product(rollMat));
 }
 
+Matrix4x4f Matrix4x4f::rotate(const Vector3f& rotation, const Vector3f& origin) {
+    return Matrix4x4f::translate(Vector3f(-origin.x, -origin.y, -origin.z)).product(Matrix4x4f::rotate(rotation).product(Matrix4x4f::translate(origin)));
+}
+
 Matrix4x4f Matrix4x4f::constructWorldMat(const Vector3f& position,const Vector3f& scale,const Vector3f& rotation) {
     Matrix4x4f translationMat = translate(position);
     Matrix4x4f scaleMat = Matrix4x4f::scale(scale);

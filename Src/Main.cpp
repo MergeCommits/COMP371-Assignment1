@@ -86,7 +86,7 @@ int main() {
 
     // Models.
     Car* car = new Car(shd);
-    car->addRotationY(MathUtil::PI / -2.f);
+//    car->addRotationY(MathUtil::PI / -2.f);
     Grid* grid = new Grid(shd);
     grid->scale = Vector3f(50.f, 1.f, 50.f); // 100x100 grid.
     
@@ -208,12 +208,12 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam) {
         input = input | Car::WalkInput::Backward;
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-//        car->addRotationY(timestep * speed);
-        input = input | Car::WalkInput::Left;
+        car->addRotationY(timestep * speed);
+//        input = input | Car::WalkInput::Left;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-//        car->addRotationY(timestep * -speed);
-        input = input | Car::WalkInput::Right;
+        car->addRotationY(timestep * -speed);
+//        input = input | Car::WalkInput::Right;
     }
     car->walk(input, timestep * speed);
     

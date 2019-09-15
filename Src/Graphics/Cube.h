@@ -23,6 +23,8 @@ private:
 
     Vector3f position;
     Vector3f scale;
+    // Rotations relative to an arbitrary origin.
+    Vector3f rotationOrigin;
     Vector3f rotation;
     Shader::Uniform* worldMat;
 
@@ -42,6 +44,7 @@ public:
     void addScale(float sca);
     void addRotationX(float bruh);
     void addRotationY(float bruh);
+    void addRotationOriginY(float bruh);
     void addRotationZ(float bruh);
     
     void render(const Vector3f& origin);
