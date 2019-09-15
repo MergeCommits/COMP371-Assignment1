@@ -7,9 +7,15 @@
 Car::Car(Shader* shd) {
     renderingMode = GL_FILL;
     
-    Cube* body = new Cube(shd);
-    body->setScale(4.f, 0.5f, 6.f);
-    body->setPosition(0.f, 0.5f, 0.f);
+    Cube* bottom = new Cube(shd);
+    bottom->setScale(4.f, 0.5f, 6.f);
+    bottom->setPosition(0.f, 0.5f, 0.f);
+    bottom->color = Vector4f(0.25f, 0.25f, 0.25f, 1.f);
+    Cube* roof = new Cube(shd);
+    roof->setScale(4.f, 0.5f, 6.f);
+    roof->setPosition(0.f, 4.25f, 0.f);
+    roof->color = Vector4f(0.25f, 0.25f, 1.f, 1.f);
+    
     Cube* leftWall = new Cube(shd);
     leftWall->setScale(0.5f, 1.25f, 6.f);
     leftWall->setPosition(-1.75f, 1.f, 0.f);
@@ -23,24 +29,42 @@ Car::Car(Shader* shd) {
     backWall->setScale(3.f, 1.25f, 0.5f);
     backWall->setPosition(0.f, 1.f, -2.75f);
     
+    Cube* topLeftPillar = new Cube(shd);
+    topLeftPillar->setScale(0.5f, 2.f, 0.5f);
+    topLeftPillar->setPosition(-1.75f, 2.25f, 2.75f);
+    Cube* topRightPillar = new Cube(shd);
+    topRightPillar->setScale(0.5f, 2.f, 0.5f);
+    topRightPillar->setPosition(1.75f, 2.25f, 2.75f);
+    Cube* botLeftPillar = new Cube(shd);
+    botLeftPillar->setScale(0.5f, 2.f, 0.5f);
+    botLeftPillar->setPosition(-1.75f, 2.25f, -2.75f);
+    Cube* botRightPillar = new Cube(shd);
+    botRightPillar->setScale(0.5f, 2.f, 0.5f);
+    botRightPillar->setPosition(1.75f, 2.25f, -2.75f);
+    
     wheels[0] = new Cube(shd);
-    wheels[0]->setPosition(4.5f, 0.f, 6.5f);
+    wheels[0]->setPosition(2.5f, 0.f, 2.5f);
     wheels[1] = new Cube(shd);
-    wheels[1]->setPosition(4.5f, 0.f, -6.5f);
+    wheels[1]->setPosition(2.5f, 0.f, -2.5f);
     wheels[2] = new Cube(shd);
-    wheels[2]->setPosition(-4.5f, 0.f, 6.5f);
+    wheels[2]->setPosition(-2.5f, 0.f, 2.5f);
     wheels[3] = new Cube(shd);
-    wheels[3]->setPosition(-4.5f, 0.f, -6.5f);
+    wheels[3]->setPosition(-2.5f, 0.f, -2.5f);
     
     for (int i = 0; i < 4; i++) {
         wheels[i]->color = Vector4f(0.f, 0.f, 0.f, 1.f);
     }
 
-    cubes.push_back(body);
+    cubes.push_back(bottom);
+    cubes.push_back(roof);
     cubes.push_back(leftWall);
     cubes.push_back(rightWall);
     cubes.push_back(frontWall);
     cubes.push_back(backWall);
+    cubes.push_back(topLeftPillar);
+    cubes.push_back(topRightPillar);
+    cubes.push_back(botLeftPillar);
+    cubes.push_back(botRightPillar);
     for (int i = 0; i < 4; i++) {
         cubes.push_back(wheels[i]);
     }
@@ -64,7 +88,7 @@ void Car::setScale(float x, float y, float z) {
 void Car::addScale(float sca) {
     scale = scale.add(Vector3f(sca, sca, sca));
     for (int i = 0; i < (int)cubes.size(); i++) {
-        cubes[i]->addScale(sca);
+        cubes[i]->addScaleOrigin(sca);
     }
 }
 

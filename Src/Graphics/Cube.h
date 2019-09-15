@@ -22,6 +22,8 @@ private:
     std::vector<float> vertexData;
 
     Vector3f position;
+    // Scales relative to an arbitrary origin.
+    Vector3f scaleOrigin;
     Vector3f scale;
     // Rotations relative to an arbitrary origin.
     Vector3f rotationOrigin;
@@ -41,7 +43,7 @@ public:
     void setPosition(float x, float y, float z);
     void addPositionXZ(const Vector2f& vect);
     void setScale(float x, float y, float z);
-    void addScale(float sca);
+    void addScaleOrigin(float sca);
     void addRotationX(float bruh);
     void addRotationY(float bruh);
     void addRotationOriginY(float bruh);

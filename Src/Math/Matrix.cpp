@@ -73,6 +73,10 @@ Matrix4x4f Matrix4x4f::scale(const Vector3f& scale) {
                       0.f,0.f,0.f,1.f);
 }
 
+Matrix4x4f Matrix4x4f::scale(const Vector3f& scale, const Vector3f& origin) {
+    return Matrix4x4f::translate(Vector3f(-origin.x, -origin.y, -origin.z)).product(Matrix4x4f::scale(scale).product(Matrix4x4f::translate(origin)));
+}
+
 Matrix4x4f Matrix4x4f::rotate(const Vector3f& rotation) {
     float sinPitch = sin(rotation.x);
     float sinYaw = sin(rotation.y);

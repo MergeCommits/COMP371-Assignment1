@@ -18,6 +18,7 @@ Cube::Cube(Shader* shd) : Mesh(shd) {
     worldMat = shd->getMat4Uniform("modelMatrix");
     color = Vector4f(1.f, 0.f, 0.f, 1.f);
     scale = Vector3f::one;
+    scaleOrigin = Vector3f::one;
 }
 
 void Cube::setPosition(float x, float y, float z) {
@@ -33,8 +34,8 @@ void Cube::setScale(float x, float y, float z) {
     scale = Vector3f(x, y, z);
 }
 
-void Cube::addScale(float sca) {
-    scale = scale.add(Vector3f(sca, sca, sca));
+void Cube::addScaleOrigin(float sca) {
+    scaleOrigin = scaleOrigin.add(Vector3f(sca, sca, sca));
 }
 
 void Cube::addRotationX(float bruh) {
@@ -78,10 +79,12 @@ void Cube::renderInternal() {
 }
 
 void Cube::render(const Vector3f& origin) {
+    Matrix4x4f scaleRelativeToOrigin = Matrix4x4f::scale(scaleOrigin, origin);
+    Matrix4x4f scaleRelativeToCube = Matrix4x4f::scale(scale);
     Matrix4x4f rotateRelativeToOrigin = Matrix4x4f::rotate(rotationOrigin, origin);
     Matrix4x4f rotateRelativeToCube = Matrix4x4f::rotate(rotation, Vector3f(0.f, 0.5f, 0.f));
     
-    Matrix4x4f mat = Matrix4x4f::scale(scale).product(rotateRelativeToCube.product(Matrix4x4f::translate(position).product(rotateRelativeToOrigin)));
+    Matrix4x4f mat = scaleRelativeToCube.product(rotateRelativeToCube.product(Matrix4x4f::translate(position).product(scaleRelativeToOrigin.product(rotateRelativeToOrigin))));
     worldMat->setValue(mat);
 
     Mesh::render();
