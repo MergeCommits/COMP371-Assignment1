@@ -77,6 +77,6 @@ void Cube::render(const Vector3f& origin) {
     Matrix4x4f rotate = Matrix4x4f::translate(Vector3f(-origin.x, -origin.y, -origin.z)).product(Matrix4x4f::rotate(rotation).product(Matrix4x4f::translate(origin)));
     Matrix4x4f mat = Matrix4x4f::scale(scale).product(Matrix4x4f::translate(position).product(rotate));
     worldMat->setValue(mat);
-    
+
     Mesh::render();
 }

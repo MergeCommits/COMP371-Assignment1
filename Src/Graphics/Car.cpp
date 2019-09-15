@@ -68,8 +68,8 @@ void Car::addRotationZ(float bruh) {
 }
 
 void Car::walk(bool forward, float speed) {
-    float sinAngle = std::sin(-rotation.y);
-    float cosAngle = std::cos(-rotation.y);
+    float sinAngle = std::sin(-rotation.y); // Invert this to use the correct coordinate system.
+    float cosAngle = std::cos(rotation.y);
     
     Vector2f targetDir = Vector2f::zero;
     if (forward) {

@@ -16,17 +16,27 @@
 #include <GLFW/glfw3.h> // GLFW provides a cross-platform interface for creating a graphical context,
                         // initializing OpenGL and binding inputs
 
-#include "Utils/String.h"
+#include "Timing.h"
 #include "Graphics/Car.h"
 #include "Graphics/Grid.h"
+#include "Graphics/Axis.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Camera.h"
-#include "Timing.h"
+#include "Math/MathUtil.h"
+
+int width = 1024;
+int height = 768;
 
 void updateInputs(float timestep, GLFWwindow* window, Car* car);
+static void cursorPositionCallback(GLFWwindow* window, double x, double y);
+float mouseXDiff = 0.f;
+float mouseYDiff = 0.f;
 
 int main() {
-    // Initialize GLFW and OpenGL version
+    // Give std::rand the current time as a seed.
+    std::srand((unsigned)std::time(NULL));
+    
+    // Initialize GLFW and OpenGL version.
     glfwInit();
 
 #if defined(PLATFORM_OSX)
@@ -35,15 +45,13 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #else
-	// On windows, we set OpenGL version to 2.1, to support more hardware
+	// On windows, we set OpenGL version to 2.1, to support more hardware.
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
 #endif
     glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
 
-    // Create Window and rendering context using GLFW, resolution is 800x600
-    int width = 1024;
-    int height = 768;
+    // Create Window and rendering context using GLFW.
     GLFWwindow* window = glfwCreateWindow(width, height, "Comp371 - Lab 01", NULL, NULL);
     if (window == NULL) {
         std::cerr << "Failed to create GLFW window" << std::endl;
@@ -51,8 +59,11 @@ int main() {
         return -1;
     }
     glfwMakeContextCurrent(window);
+    glfwSetCursorPosCallback(window, cursorPositionCallback);
+    glfwSetCursorPos(window, width / 2.f, height / 2.f);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-    // Initialize GLEW
+    // Initialize GLEW.
     glewExperimental = true; // Needed for core profile
     if (glewInit() != GLEW_OK) {
         std::cerr << "Failed to create GLEW" << std::endl;
@@ -68,7 +79,7 @@ int main() {
     
     // Camera.
     Camera* cam = new Camera((float)width / height);
-    cam->setPosition(Vector3f(0.f, 5.f, -5.f));
+    cam->setPosition(Vector3f(0.f, 5.f, -10.f));
 
     // Shaders.
     Shader* shd  = new Shader("default/");
@@ -79,12 +90,22 @@ int main() {
     Car* car = new Car(shd);
     Grid* grid = new Grid(shd);
     grid->scale = Vector3f(50.f, 1.f, 50.f); // 100x100 grid.
+    
+    Axis* xAxis = new Axis(shd);
+    xAxis->color = Vector4f(1.f, 0.f, 0.f, 1.f);
+    xAxis->rotation = Vector3f(0.f, MathUtil::PI / 2.f, 0.f);
+    Axis* yAxis = new Axis(shd);
+    yAxis->color = Vector4f(0.f, 0.f, 1.f, 1.f);
+    yAxis->rotation = Vector3f(MathUtil::PI / -2.f, 0.f, 0.f);
+    Axis* zAxis = new Axis(shd);
+    zAxis->color = Vector4f(0.f, 0.75f, 0.f, 1.f);
 
     while (!glfwWindowShouldClose(window)) {
-        // Detect inputs.
-        glfwPollEvents();
         
         while (timing->tickReady()) {
+            // Detect inputs.
+            glfwPollEvents();
+            
             updateInputs((float)timing->getTimeStep(), window, car);
             
             timing->subtractTick();
@@ -96,6 +117,13 @@ int main() {
 
         car->render();
         grid->render();
+        
+        // Disable depth buffer here to the cartesian axes always show up over everything else.
+        glDisable(GL_DEPTH_TEST);
+        xAxis->render();
+        yAxis->render();
+        zAxis->render();
+        glEnable(GL_DEPTH_TEST);
 
         glfwSwapBuffers(window);
         
@@ -107,6 +135,7 @@ int main() {
     delete cam;
     delete car;
     delete grid;
+    delete zAxis;
     delete shd;
 
     // Shutdown GLFW
@@ -115,11 +144,28 @@ int main() {
 	return 0;
 }
 
+void cursorPositionCallback(GLFWwindow* window, double x, double y) {
+    float centerX = width / 2.f;
+    float centerY = height / 2.f;
+    mouseXDiff = (x - centerX) / 300.f;
+    mouseYDiff = (y - centerY) / 300.f;
+    glfwSetCursorPos(window, centerX, centerY);
+}
+
+bool spaceHit = false; // Used to determine whether the spacebar was HIT, as opposed to just pressed.
+
 void updateInputs(float timestep, GLFWwindow* window, Car* car) {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         glfwSetWindowShouldClose(window, true);
         return;
     }
+    
+    // Teleport.
+    if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS && !spaceHit) {
+        car->addPositionXZ(Vector2f((std::rand() % 4) - 1.5f, (std::rand() % 4) - 1.5f));
+        spaceHit = true;
+    }
+    if (spaceHit) { spaceHit = glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS; }
     
     // Movement.
     float speed = 5.f;

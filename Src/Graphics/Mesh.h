@@ -14,6 +14,7 @@ private:
 protected:
     Shader* shader;
     GLsizei primitiveCount = 0;
+    GLenum mode;
 
     bool needsGen;
     bool needsUpload;

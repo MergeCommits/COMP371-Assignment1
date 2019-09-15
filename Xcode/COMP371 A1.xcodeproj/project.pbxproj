@@ -28,6 +28,7 @@
 		193AD10B232A9227007879F4 /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 193AD10A232A9227007879F4 /* Mesh.cpp */; };
 		193AD10E232A94BC007879F4 /* Triangle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 193AD10D232A94BC007879F4 /* Triangle.cpp */; };
 		198CE12A232AFD6E009C2FBF /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 198CE128232AFD6E009C2FBF /* Camera.cpp */; };
+		19BF9A60232DE8FA00FF13A1 /* Axis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19BF9A5E232DE8FA00FF13A1 /* Axis.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -79,6 +80,8 @@
 		193AD10D232A94BC007879F4 /* Triangle.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Triangle.cpp; sourceTree = "<group>"; };
 		198CE128232AFD6E009C2FBF /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
 		198CE129232AFD6E009C2FBF /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
+		19BF9A5E232DE8FA00FF13A1 /* Axis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Axis.cpp; sourceTree = "<group>"; };
+		19BF9A5F232DE8FA00FF13A1 /* Axis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Axis.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +183,8 @@
 		193AD0F3232A83CE007879F4 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				19BF9A5E232DE8FA00FF13A1 /* Axis.cpp */,
+				19BF9A5F232DE8FA00FF13A1 /* Axis.h */,
 				198CE128232AFD6E009C2FBF /* Camera.cpp */,
 				198CE129232AFD6E009C2FBF /* Camera.h */,
 				19240966232B30540062AC03 /* Car.cpp */,
@@ -265,6 +270,7 @@
 				193AD0F6232A83DF007879F4 /* Shader.cpp in Sources */,
 				190B8FBE232C086D00F96298 /* Grid.cpp in Sources */,
 				193AD0EA232A8276007879F4 /* Matrix.cpp in Sources */,
+				19BF9A60232DE8FA00FF13A1 /* Axis.cpp in Sources */,
 				193AD10B232A9227007879F4 /* Mesh.cpp in Sources */,
 				193AD10E232A94BC007879F4 /* Triangle.cpp in Sources */,
 				193AD0EB232A8276007879F4 /* Timing.cpp in Sources */,
