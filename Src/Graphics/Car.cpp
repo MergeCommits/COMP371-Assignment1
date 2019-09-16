@@ -15,7 +15,15 @@ Car::Car(Shader* shd) {
     roof->setScale(4.f, 0.5f, 6.f);
     roof->setPosition(0.f, 4.25f, 0.f);
     roof->color = Vector4f(0.25f, 0.25f, 1.f, 1.f);
-    
+
+    Cube* front = new Cube(shd);
+    front->setScale(3.f, 1.25f, 1.5f);
+    front->setPosition(0.f, 1.f, 3.75f);
+    Cube* back = new Cube(shd);
+    back->setScale(3.f, 1.25f, 0.75f);
+    back->setPosition(0.f, 1.f, -3.375f);
+
+    // Sides of the car.
     Cube* leftWall = new Cube(shd);
     leftWall->setScale(0.5f, 1.25f, 6.f);
     leftWall->setPosition(-1.75f, 1.f, 0.f);
@@ -28,7 +36,8 @@ Car::Car(Shader* shd) {
     Cube* backWall = new Cube(shd);
     backWall->setScale(3.f, 1.25f, 0.5f);
     backWall->setPosition(0.f, 1.f, -2.75f);
-    
+
+    // Supports for the roof.
     Cube* topLeftPillar = new Cube(shd);
     topLeftPillar->setScale(0.5f, 2.f, 0.5f);
     topLeftPillar->setPosition(-1.75f, 2.25f, 2.75f);
@@ -43,13 +52,13 @@ Car::Car(Shader* shd) {
     botRightPillar->setPosition(1.75f, 2.25f, -2.75f);
     
     wheels[0] = new Cube(shd);
-    wheels[0]->setPosition(2.5f, 0.f, 2.5f);
+    wheels[0]->setPosition(2.5f, 0.f, 2.25f);
     wheels[1] = new Cube(shd);
-    wheels[1]->setPosition(2.5f, 0.f, -2.5f);
+    wheels[1]->setPosition(2.5f, 0.f, -2.25f);
     wheels[2] = new Cube(shd);
-    wheels[2]->setPosition(-2.5f, 0.f, 2.5f);
+    wheels[2]->setPosition(-2.5f, 0.f, 2.25f);
     wheels[3] = new Cube(shd);
-    wheels[3]->setPosition(-2.5f, 0.f, -2.5f);
+    wheels[3]->setPosition(-2.5f, 0.f, -2.25f);
     
     for (int i = 0; i < 4; i++) {
         wheels[i]->color = Vector4f(0.f, 0.f, 0.f, 1.f);
@@ -57,6 +66,8 @@ Car::Car(Shader* shd) {
 
     cubes.push_back(bottom);
     cubes.push_back(roof);
+    cubes.push_back(front);
+    cubes.push_back(back);
     cubes.push_back(leftWall);
     cubes.push_back(rightWall);
     cubes.push_back(frontWall);
