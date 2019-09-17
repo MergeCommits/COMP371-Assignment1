@@ -15,3 +15,9 @@ int MathUtil::clamp(int val, int min, int max) {
     if (val >= max) { return max; }
     return val;
 }
+
+float MathUtil::clampFloat(float val, float min, float max) {
+    if (val <= min) { return min; }
+    if (val >= max) { return max; }
+    return val;
+}

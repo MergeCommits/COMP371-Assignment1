@@ -103,5 +103,6 @@ void Camera::addAngle(float x, float y) {
 
 void Camera::addFov(float deg) {
     fov += MathUtil::degToRad(deg);
+    fov = MathUtil::clampFloat(fov, 0.1f, 2.9f);
     needsProjUpdate = true;
 }

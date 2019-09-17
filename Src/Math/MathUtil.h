@@ -13,6 +13,7 @@ public:
 
     // Clamps an integer between a min and max inclusively.
     static int clamp(int val, int min, int max);
+    static float clampFloat(float val, float min, float max);
 };
 
 #endif // MATH_H_INCLUDED
