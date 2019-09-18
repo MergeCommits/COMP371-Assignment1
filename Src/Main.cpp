@@ -113,6 +113,8 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
         while (timing->tickReady()) {
             // Detect inputs.
+            mouseXDiff = 0.f;
+            mouseYDiff = 0.f;
             glfwPollEvents();
             
             updateInputs((float)timing->getTimeStep(), window, car, cam);
@@ -165,7 +167,7 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
         prevMouseX = xpos;
         prevMouseY = ypos;
         
-        float sensitivity = 0.05f;
+        float sensitivity = 0.01f;
         mouseXDiff *= sensitivity;
         mouseYDiff *= sensitivity;
     }
@@ -204,14 +206,22 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam) {
         input = input | Car::WalkInput::Backward;
     }
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        car->addRotationY(timestep * speed);
         input = input | Car::WalkInput::Left;
     }
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        car->addRotationY(timestep * -speed);
         input = input | Car::WalkInput::Right;
     }
     car->walk(input, timestep * speed);
+    
+    
+    if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        car->addRotationY(timestep * speed);
+        input = input | Car::WalkInput::Right;
+    }
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+        car->addRotationY(timestep * -speed);
+        input = input | Car::WalkInput::Right;
+    }
     
     // Scale.
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
@@ -232,8 +242,36 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam) {
         car->setRenderingMode(GL_FILL);
     }
     
+    // Camera movement.
+    Camera::WalkInput camInput = Camera::WalkInput::None;
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        camInput = camInput | Camera::WalkInput::Forward;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        camInput = camInput | Camera::WalkInput::Backward;
+    }
+    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
+        camInput = camInput | Camera::WalkInput::Left;
+    }
+    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
+        camInput = camInput | Camera::WalkInput::Right;
+    }
+    cam->walk(camInput, timestep * speed);
+    
+    // Reset camera position and orientation.
+    if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {
+        cam->setPosition(Vector3f(0.f, 5.f, -10.f));
+        cam->resetAngle();
+    }
+    
     // Use mouse movement to manipulate the camera.
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
         cam->addFov(-mouseYDiff);
+    }
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
+        cam->addAngle(mouseXDiff, 0.f);
+    }
+    if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+        cam->addAngle(0.f, mouseYDiff);
     }
 }
