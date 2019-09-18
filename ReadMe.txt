@@ -11,6 +11,10 @@ J - Scales down the car's size.
 
 SpaceBar - Positions the car at a random location.
 
+P - Changes the rendering mode of the car to points.
+L - Changes the rendering mode of the car to lines (wireframe).
+T - Changes the rendering mode of the car to fill (triangles).
+
 LeftArrow - Turn camera left.
 RightArrow - Turn camera right.
 UpArrow - Tilt camera up.
