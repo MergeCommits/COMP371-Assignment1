@@ -82,6 +82,7 @@ int main() {
     
     glClearColor(0.f, 0.f, 0.f, 1.f);
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
     
     // Fixed time steps.
     Timing* timing = new Timing(60);
@@ -97,7 +98,7 @@ int main() {
 
     // Models.
     Car* car = new Car(shd);
-//    car->addRotationY(MathUtil::PI / -2.f);
+    car->addRotationY(MathUtil::PI / -2.f);
     Grid* grid = new Grid(shd);
     grid->scale = Vector3f(50.f, 1.f, 50.f); // 100x100 grid.
     
@@ -242,21 +243,19 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam) {
         car->setRenderingMode(GL_FILL);
     }
     
-    // Camera movement.
-    Camera::WalkInput camInput = Camera::WalkInput::None;
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-        camInput = camInput | Camera::WalkInput::Forward;
-    }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        camInput = camInput | Camera::WalkInput::Backward;
-    }
+    // Camera orientation.
     if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
-        camInput = camInput | Camera::WalkInput::Left;
+        cam->addAngle(timestep * -5.f, 0.f);
     }
     if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS) {
-        camInput = camInput | Camera::WalkInput::Right;
+        cam->addAngle(timestep * 5.f, 0.f);
     }
-    cam->walk(camInput, timestep * speed);
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        cam->addAngle(0.f, timestep * -5.f);
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        cam->addAngle(0.f, timestep * 5.f);
+    }
     
     // Reset camera position and orientation.
     if (glfwGetKey(window, GLFW_KEY_HOME) == GLFW_PRESS) {

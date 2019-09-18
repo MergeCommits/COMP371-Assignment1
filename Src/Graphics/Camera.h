@@ -7,15 +7,6 @@
 class GraphicsResources;
 
 class Camera {
-public:
-    enum class WalkInput {
-        None = 0x0,
-        Forward = 0x1,
-        Backward = 0x2,
-        Left = 0x4,
-        Right = 0x8
-    };
-    
 private:
     GraphicsResources* gfxRes;
 
@@ -48,7 +39,6 @@ public:
     void addShader(Shader* shd);
 
     void update();
-    void walk(WalkInput input, float speed);
 
     void setPosition(const Vector3f& pos);
     void setTilt(float rad);
@@ -56,8 +46,5 @@ public:
     void resetAngle();
     void addFov(float deg);
 };
-
-const Camera::WalkInput operator&(const Camera::WalkInput& a, const Camera::WalkInput& b);
-const Camera::WalkInput operator|(const Camera::WalkInput& a, const Camera::WalkInput& b);
 
 #endif // CAMERA_H_INCLUDED

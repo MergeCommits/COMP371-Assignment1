@@ -1,0 +1,23 @@
+**** CONTROLS ****
+
+W - Move forward.
+A - Move left.
+S - Move right.
+D - Move backwards.
+Q - Rotate left about Y axis.
+E - Rotate right about Y axis.
+U - Scales up the car's size.
+J - Scales down the car's size.
+
+SpaceBar - Positions the car at a random location.
+
+LeftArrow - Turn camera left.
+RightArrow - Turn camera right.
+UpArrow - Tilt camera up.
+DownArrow - Tilt camera down.
+
+Mouse1 - Hold down to use mouse movement in the X direction to zoom into/out of the scene.
+Mouse2 - Hold down to use mouse movement in the X direction to pan the camera.
+Mouse3 - Hold down to use mouse movement in the Y direction to tilt the camera.
+
+Home - Resets the camera's orientation and position.

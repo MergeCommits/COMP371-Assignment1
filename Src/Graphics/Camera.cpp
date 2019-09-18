@@ -114,38 +114,3 @@ void Camera::addFov(float deg) {
     fov = MathUtil::clampFloat(fov, 0.1f, 2.9f);
     needsProjUpdate = true;
 }
-
-void Camera::walk(Camera::WalkInput input, float speed) {
-    if (input == WalkInput::None) { return; }
-    
-    float sinAngle = std::sin(xAngle);
-    float cosAngle = std::cos(xAngle);
-    
-    Vector2f targetDir = Vector2f::zero;
-    if ((input & WalkInput::Forward) != WalkInput::None) {
-        targetDir = targetDir.add(Vector2f(sinAngle,cosAngle));
-    }
-    if ((input & WalkInput::Backward) != WalkInput::None) {
-        targetDir = targetDir.add(Vector2f(-sinAngle,-cosAngle));
-    }
-    if ((input & WalkInput::Left) != WalkInput::None) {
-        targetDir = targetDir.add(Vector2f(-cosAngle,sinAngle));
-    }
-    if ((input & WalkInput::Right) != WalkInput::None) {
-        targetDir = targetDir.add(Vector2f(cosAngle,-sinAngle));
-    }
-    
-    if (targetDir.lengthSquared() < 0.01f) { return; }
-    targetDir = targetDir.normalize().multiply(speed);
-    position.x += targetDir.x;
-    position.z += targetDir.y;
-    needsViewUpdate = true;
-}
-
-const Camera::WalkInput operator&(const Camera::WalkInput& a, const Camera::WalkInput& b) {
-    return (Camera::WalkInput)((int)a & (int)b);
-}
-
-const Camera::WalkInput operator|(const Camera::WalkInput& a, const Camera::WalkInput& b) {
-    return (Camera::WalkInput)((int)a | (int)b);
-}
