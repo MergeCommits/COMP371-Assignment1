@@ -20,7 +20,7 @@ RightArrow - Turn camera right.
 UpArrow - Tilt camera up.
 DownArrow - Tilt camera down.
 
-Mouse1 - Hold down to use mouse movement in the X direction to zoom into/out of the scene.
+Mouse1 - Hold down to use mouse movement in the Y direction to zoom into/out of the scene.
 Mouse2 - Hold down to use mouse movement in the X direction to pan the camera.
 Mouse3 - Hold down to use mouse movement in the Y direction to tilt the camera.
 

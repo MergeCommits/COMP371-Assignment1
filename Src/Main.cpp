@@ -266,7 +266,7 @@ void updateInputs(float timestep, GLFWwindow* window, Car* car, Camera* cam) {
     
     // Use mouse movement to manipulate the camera.
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
-        cam->addFov(-mouseYDiff);
+        cam->addFov(mouseYDiff * 2.f);
     }
     if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_RIGHT) == GLFW_PRESS) {
         cam->addAngle(mouseXDiff, 0.f);
