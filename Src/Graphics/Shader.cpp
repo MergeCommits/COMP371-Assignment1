@@ -11,7 +11,7 @@ Shader::Shader(const String& shaderFolder) {
     String vertexSource;
     std::ifstream vertexSourceFile; vertexSourceFile.open((shaderFolder + "vertex.glsl").cstr());
     if (!vertexSourceFile.good()) {
-        return;
+        throw std::runtime_error("Failed to load vertex shader source.");
     }
 
     char* buf = new char[512];
@@ -41,7 +41,7 @@ Shader::Shader(const String& shaderFolder) {
     String fragmentSource;
     std::ifstream fragmentSourceFile; fragmentSourceFile.open((shaderFolder + "fragment.glsl").cstr());
     if (!fragmentSourceFile.good()) {
-        return;
+        throw std::runtime_error("Failed to load fragment shader source.");
     }
 
     buf = new char[512];
@@ -80,7 +80,7 @@ Shader::~Shader() {
     glDeleteProgram(shaderProgramID);
     glDeleteShader(vertexShaderID);
     glDeleteShader(fragmentShaderID);
-    
+
     for (int i = 0; i < (int)uniformVars.size(); i++) {
         delete uniformVars[i];
     }
@@ -115,7 +115,7 @@ Shader::Uniform* Shader::getMat4Uniform(const String& name) {
             return uniformVars[i];
         }
     }
-    
+
     // This isn't here, make it.
     Uniform* uf = new Uniform(Uniform::Kind::Matrix, glGetUniformLocation(shaderProgramID, name.cstr()));
     uf->name = name;
@@ -132,7 +132,7 @@ Shader::Uniform* Shader::getVector4fUniform(const String& name) {
             return uniformVars[i];
         }
     }
-    
+
     // This isn't here, make it.
     Uniform* uf = new Uniform(Uniform::Kind::Vector4f, glGetUniformLocation(shaderProgramID, name.cstr()));
     uf->name = name;
@@ -172,7 +172,7 @@ void Shader::use() const {
                 glUniform4f(uf->location, uf->value.vec4Val.x, uf->value.vec4Val.y, uf->value.vec4Val.z, uf->value.vec4Val.w);
             } break;
         }
-        
+
         err = glGetError();
         if (err != GL_NO_ERROR) {
             throw std::runtime_error("Failed to assign shader uniform!");
