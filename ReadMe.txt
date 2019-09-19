@@ -10,7 +10,7 @@ U - Scales up the car's size.
 J - Scales down the car's size.
 
 Shift - Speeds up car movement.
-Ctrl - Slows up car movement.
+Ctrl - Slows down car movement.
 
 SpaceBar - Positions the car at a random location.
 
