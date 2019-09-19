@@ -9,6 +9,9 @@ E - Rotate right about Y axis.
 U - Scales up the car's size.
 J - Scales down the car's size.
 
+Shift - Speeds up car movement.
+Ctrl - Slows up car movement.
+
 SpaceBar - Positions the car at a random location.
 
 P - Changes the rendering mode of the car to points.
