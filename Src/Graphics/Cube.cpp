@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Cube.h"
 
 Cube::Cube(Shader* shd) : Mesh(shd) {

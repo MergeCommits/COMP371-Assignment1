@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Mesh.h"
 #include "Shader.h"
 

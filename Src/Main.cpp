@@ -9,6 +9,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
 
 #define GLEW_STATIC 1   // This allows linking with Static Library on Windows, without DLL
 #include <GL/glew.h>    // Include GLEW - OpenGL Extension Wrangler
@@ -164,10 +165,10 @@ void mouseCallback(GLFWwindow* window, double xpos, double ypos) {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     } else {
         glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-        mouseXDiff = xpos - prevMouseX;
-        mouseYDiff = ypos - prevMouseY;
-        prevMouseX = xpos;
-        prevMouseY = ypos;
+        mouseXDiff = (float)xpos - prevMouseX;
+        mouseYDiff = (float)ypos - prevMouseY;
+        prevMouseX = (float)xpos;
+        prevMouseY = (float)ypos;
         
         float sensitivity = 0.01f;
         mouseXDiff *= sensitivity;

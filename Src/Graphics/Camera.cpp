@@ -1,4 +1,5 @@
 #include <cmath>
+#include <stdexcept>
 
 #include "Camera.h"
 #include "../Math/MathUtil.h"

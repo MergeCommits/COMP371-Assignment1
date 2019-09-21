@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Grid.h"
 
 Grid::Grid(Shader* shd) : Mesh(shd) {

@@ -1,3 +1,5 @@
+#include <stdexcept>
+
 #include "Axis.h"
 
 Axis::Axis(Shader* shd) : Mesh(shd) {

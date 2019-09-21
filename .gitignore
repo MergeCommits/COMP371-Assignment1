@@ -5,6 +5,8 @@
 *.dll
 *.pdb
 *.ilk
+*.log
+[Bb]in
 .vs
 
 # Visual Studio Code
