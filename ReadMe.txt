@@ -2,8 +2,8 @@
 
 W - Move forward.
 A - Move left.
-S - Move right.
-D - Move backwards.
+S - Move backwards.
+D - Move right.
 Q - Rotate left about Y axis.
 E - Rotate right about Y axis.
 U - Scales up the car's size.
@@ -28,3 +28,4 @@ Mouse2 - Hold down to use mouse movement in the X direction to pan the camera.
 Mouse3 - Hold down to use mouse movement in the Y direction to tilt the camera.
 
 Home - Resets the camera's orientation and position.
+Escape - Quits the program.
